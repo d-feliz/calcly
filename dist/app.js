@@ -1,5 +1,6 @@
 import { calculate, brackets, validate, round } from './model.js';
 import { generateReport } from './report.js';
+import { setupGrowth } from './growth.js';
 
 const $ = selector => document.querySelector(selector);
 const money = value => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(value);
@@ -137,3 +138,4 @@ $('#pdf').onclick = async () => {
   finally { button.disabled = false; button.innerHTML = label; }
 };
 sync();
+setupGrowth(() => state);

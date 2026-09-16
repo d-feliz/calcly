@@ -12,6 +12,8 @@ La media prevista determina el tramo. La facturación real del mes determina la 
 
 Los archivos JSON usan la versión 2 (dos importes de facturación) y cargan también la versión 1: su único ingreso inicializa ambos campos. Los reportes se dibujan localmente a alta resolución y se descargan sin llamadas de red.
 
-Verificación de cálculos y compatibilidad: `node --test tests/model.test.mjs`.
+El simulador de aumentos compara facturación extra, disponible extra y reserva adicional de IRPF, manteniendo la media prevista, la base y los gastos. Incluye meses en pérdidas y muestra el cambio absoluto y relativo. Las simulaciones no modifican ni guardan cambios en el presupuesto.
+
+Verificación de cálculos, simulaciones y compatibilidad: `node --test tests/*.test.mjs`.
 
 La reserva IRPF es orientativa y configurable; no constituye un cálculo de la declaración anual. La cuota usa tablas 2026 y un tipo del 31,50%. No incluye bonificaciones ni regímenes especiales.
