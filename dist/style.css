@@ -2,3 +2,52 @@
 /* Legible controls and financial figures, including smaller screens. */
 .eyebrow,.section-heading .eyebrow,.hero-note,.float-label,.example,.benefits b,.pill,.result-caption,.result-foot,.table-note,.source-link,footer>span,.year,.tag,.expense-fixed small,.irpf-rate small,.total-line small{font-size:12px}.outline,.text-button,.income-hint,.slider-heading,.range-labels,.math-line,.expense-fixed,.add-button,.breakdown>div,.result-lines>div,.result-card>p{font-size:14px}.small{font-size:14px}.range-labels b,th{font-size:12px}td{font-size:12px}.demo-legend,.subtle,.demo-result>span,.demo-result small{font-size:12px}@media(max-width:720px){.hero-note{flex-wrap:wrap}.benefits{font-size:12px}.income-hint{font-size:12px}.table-panel{padding:18px}.math-line{font-size:12px}.math-line b{font-size:16px}.privacy{font-size:12px}.eyebrow{line-height:1.5}.net{font-size:clamp(34px,9vw,58px)}}
 @media(max-width:720px){.visual-sticker{display:none}}
+
+/* Keep the working surface focused on the monthly decisions. */
+.section-heading{align-items:center;flex-wrap:wrap;gap:24px}
+.section-heading h2{margin-top:0}
+.actions{align-items:flex-end;gap:14px}
+.progress-actions{margin:0;padding:8px;border:1px solid var(--line);border-radius:9px;display:flex;gap:6px;min-width:0}
+.progress-actions legend{font-size:12px;color:#667660;padding:0 7px}
+.progress-actions .outline{border:0;background:#f0f4ea;padding:11px 12px}
+.report-button{margin-bottom:9px;padding:11px 14px;background:#fff}
+.report-button small{font-size:11px;color:var(--muted);margin-left:5px}
+.report-button:disabled{opacity:.65;cursor:wait}
+.field-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:22px 0 9px}
+.field-heading>label{font-size:15px;font-weight:600}
+.field-purpose{font-size:10px;letter-spacing:.6px;color:#6d805a;text-align:right}
+.field-help{font-size:13px;color:#75806e;line-height:1.65;margin:0 0 12px}
+.income-field .money-input input{font-size:31px}
+.current-month{border-top:1px solid var(--line);padding-bottom:23px}
+.current-month .money-input{background:#f3f9ea;border-color:#c6d9ae}
+.income-hint{margin-bottom:9px}
+.income-hint strong{font-size:14px}
+.bracket-banner{flex-wrap:wrap;gap:10px}
+.bracket-banner a{font-size:12px;font-weight:600;text-decoration-thickness:1px;text-underline-offset:3px;white-space:nowrap}
+.irpf-rate{gap:16px;align-items:flex-start}
+.irpf-rate label{font-size:15px}
+.irpf-rate small{font-size:13px;line-height:1.6;max-width:300px}
+.irpf-rate>div{flex-shrink:0;white-space:nowrap}
+.tax-source{display:inline-block;font-size:12px;line-height:1.6;color:#5b734a;margin-top:11px;text-underline-offset:3px}
+.contributions-total{margin-top:22px;padding-top:22px;border-top:1px solid #ffffff25}
+.contributions-total>span{font-size:14px;color:#d1dfc8}
+.contributions-total>strong{display:block;font-size:32px;font-weight:500;letter-spacing:-1px;margin:10px 0;color:#f5f9ed}
+.contributions-total>p{font-size:14px;line-height:1.7;color:#bdceb5;margin:0}
+.reference-panel{border:1px solid #e2e7db;border-radius:10px;background:#f5f7f0;scroll-margin-top:28px}
+.reference-panel>summary{display:flex;align-items:center;justify-content:space-between;gap:15px;cursor:pointer;padding:24px;list-style:none}
+.reference-panel>summary::-webkit-details-marker{display:none}
+.reference-eyebrow,.reference-title,.reference-subtitle{display:block}
+.reference-eyebrow{color:#7a8770;font-size:11px;letter-spacing:.8px;margin-bottom:9px}
+.reference-title{font-size:17px;font-weight:500;color:#5d7051}
+.reference-subtitle{font-size:13px;color:#7a8471;line-height:1.5;margin-top:7px}
+.disclosure-icon{font-size:22px;color:#859377;transition:transform .15s}
+.reference-panel[open] .disclosure-icon{transform:rotate(45deg)}
+.reference-content{padding:0 24px 24px}
+.reference-content table{color:#75816a}
+.reference-content .active-tramo{background:#e9f1df;color:#46632f}
+.reference-content td{border-bottom-color:#e7ecdf}
+.table-scroll{overflow-x:auto}
+@media(min-width:1001px){.workspace aside{align-self:start;position:sticky;top:24px}.workspace aside:has(.reference-panel[open]){position:static}}
+@media(max-width:720px){.actions{width:100%;gap:10px;align-items:center}.progress-actions{flex:1}.progress-actions .tooltip-wrap{flex:1}.progress-actions button{width:100%;font-size:12px;padding:10px 8px}.report-button{margin-bottom:0;font-size:12px;padding:11px}.field-heading{gap:8px}.field-purpose{font-size:9px}.field-heading>label{font-size:14px}.reference-panel>summary{padding:22px}.reference-content{padding:0 16px 20px}.contributions-total>strong{font-size:30px}footer>span:last-child{width:auto}.actions .tooltip-wrap>[role=tooltip]{left:0;right:auto;width:190px}}
+@media(max-width:390px){.actions{flex-wrap:wrap}.progress-actions{flex-basis:100%}.report-button{width:100%}.field-heading{align-items:flex-start}.field-purpose{max-width:87px;line-height:1.5}}
+@media(prefers-reduced-motion:reduce){.disclosure-icon{transition:none}}
