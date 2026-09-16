@@ -12,7 +12,7 @@ La media prevista determina el tramo. La facturación real del mes determina la 
 
 Los archivos JSON usan la versión 2 (dos importes de facturación) y cargan también la versión 1: su único ingreso inicializa ambos campos. Los reportes se dibujan localmente a alta resolución y se descargan sin llamadas de red.
 
-El simulador de aumentos compara facturación extra, disponible extra y reserva adicional de IRPF, manteniendo la media prevista, la base y los gastos. Incluye meses en pérdidas y muestra el cambio absoluto y relativo. Las simulaciones no modifican ni guardan cambios en el presupuesto.
+El simulador parte de la facturación mensual actual y permite restablecerla. Compara facturación, disponible y cuota más reserva de IRPF. Modela un cambio sostenido: la media prevista cambia en la misma cantidad que la facturación, manteniendo los gastos y el porcentaje de reserva. La base elegida se ajusta a los límites del nuevo tramo. La gráfica marca el valor original e incluye los saltos entre tramos. Las simulaciones no modifican ni guardan cambios en el presupuesto.
 
 Verificación de cálculos, simulaciones y compatibilidad: `node --test tests/*.test.mjs`.
 

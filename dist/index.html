@@ -53,7 +53,7 @@
       <div class="allocation" id="allocation"></div>
       <div class="result-lines"><div><span><i class="dot green"></i> Disponible</span><b id="summary-net"></b></div><div><span><i class="dot purple"></i> Cuota de autónomo</span><b id="summary-fee"></b></div><div><span><i class="dot orange"></i> Reserva de IRPF</span><b id="summary-tax"></b></div><div><span><i class="dot gray"></i> Otros gastos</span><b id="summary-expenses"></b></div></div>
       <div class="contributions-total"><span>Cuota + reserva de IRPF</span><strong id="contributions-total"></strong><p id="contributions-sentence"></p></div>
-      <button id="open-growth" class="growth-trigger" aria-haspopup="dialog" aria-controls="growth-modal">¿Cuánto me queda realmente de facturar más? <span aria-hidden="true">↗</span></button>
+      <button id="open-growth" class="growth-trigger" aria-haspopup="dialog" aria-controls="growth-modal">¿Y si facturase más? <span aria-hidden="true">↗</span></button>
     </article>
     <details id="bracket-reference" class="reference-panel">
       <summary><span><span class="reference-eyebrow">SOLO COMO REFERENCIA · 2026</span><span class="reference-title">Encuentra tu tramo</span></span><span class="disclosure-icon" aria-hidden="true">＋</span></summary>
@@ -79,29 +79,25 @@
   </div>
   <a class="brand" href="#">calcly.</a>
 </footer>
-<dialog id="growth-modal" class="growth-modal" aria-labelledby="growth-title" aria-describedby="growth-assumptions">
-  <div class="growth-modal-heading"><h2 id="growth-title">Facturar más. ¿Cuánto te queda?</h2><button type="button" data-close aria-label="Cerrar simulador de aumentos" autofocus>×</button></div>
-  <p id="growth-assumptions" class="growth-assumptions"></p>
+<dialog id="growth-modal" class="growth-modal" aria-labelledby="growth-title" aria-describedby="growth-scope">
+  <div class="growth-modal-heading"><h2 id="growth-title">¿Y si facturase más?</h2><button type="button" data-close aria-label="Cerrar simulador de aumentos" autofocus>×</button></div>
+  <p class="growth-subtitle">¿Qué tanto dinero disponible tendría si logro aumentar mi facturación?</p>
   <div class="growth-controls">
-    <div class="growth-input-group"><label for="growth-amount">¿Cuánto más facturarías este mes?</label><div class="growth-amount-wrap"><span aria-hidden="true">+</span><input id="growth-amount" type="number" min="0" max="10000" step="0.01" value="500"><span aria-hidden="true">€</span></div></div>
-    <div class="growth-presets" role="group" aria-label="Aumentos de ejemplo"><button type="button" data-increase="500" aria-pressed="true">+500 €</button><button type="button" data-increase="1000" aria-pressed="false">+1.000 €</button><button type="button" data-increase="3000" aria-pressed="false">+3.000 €</button></div>
+    <div class="growth-input-group"><label for="growth-amount">Facturación mensual</label><div class="growth-amount-wrap"><input id="growth-amount" type="number" min="0" max="10000000" step="0.01"><span aria-hidden="true">€</span></div></div>
+    <button id="growth-reset" type="button" class="outline">Volver a mi facturación actual</button>
   </div>
-  <input id="growth-slider" class="range" type="range" min="0" max="10000" step="0.01" value="500" aria-label="Aumento de facturación del mes">
-  <div class="growth-slider-labels"><span>Sin aumento</span><span>+10.000 €</span></div>
+  <input id="growth-slider" class="range" type="range" min="0" step="0.01" aria-label="Facturación mensual simulada">
+  <div class="growth-slider-labels"><span>0 €</span><span id="growth-limit"></span></div>
   <div class="growth-results" aria-live="polite" aria-atomic="true">
-    <div class="growth-result-net"><span>Más dinero para ti</span><strong id="growth-net"></strong><p id="growth-retained"></p></div>
-    <div class="growth-result-tax"><span>Más reserva de IRPF</span><strong id="growth-tax"></strong><p id="growth-tax-note"></p></div>
-    <p id="growth-relative" class="growth-relative"></p>
+    <div class="growth-result-net"><span>Dinero disponible</span><strong id="growth-net"></strong><p id="growth-difference"></p></div>
+    <div class="growth-result-tax"><span>Cuota + reserva de IRPF</span><strong id="growth-tax"></strong><p id="growth-tax-note"></p></div>
   </div>
   <figure class="growth-figure">
-    <figcaption>Lo que aumenta respecto a tu mes actual <span>Importes en €</span></figcaption>
-    <div class="growth-legend"><span><i class="growth-key-gross" aria-hidden="true"></i>Facturación extra</span><span><i class="growth-key-net" aria-hidden="true"></i>Disponible extra</span><span><i class="growth-key-tax" aria-hidden="true"></i>IRPF adicional</span></div>
+    <div class="growth-legend"><span><i class="growth-key-gross" aria-hidden="true"></i>Facturación</span><span><i class="growth-key-net" aria-hidden="true"></i>Disponible</span><span><i class="growth-key-tax" aria-hidden="true"></i>Cuota + IRPF</span><span><i class="growth-key-bracket" aria-hidden="true"></i>Cambio de tramo</span></div>
     <div id="growth-chart" class="growth-chart"></div>
-    <p class="growth-x-label">Aumento de facturación este mes (€)</p>
+    <p class="growth-x-label">Facturación mensual (€)</p>
   </figure>
-  <div class="growth-comparison-wrap"><table class="growth-comparison"><caption>Tu mes, antes y después</caption><thead><tr><th scope="col">Total mensual</th><th scope="col">Ahora</th><th scope="col">Con el aumento</th></tr></thead><tbody><tr><th scope="row">Facturación</th><td id="growth-income-before"></td><td id="growth-income-after"></td></tr><tr><th scope="row">Cuota + reserva IRPF</th><td id="growth-taxes-before"></td><td id="growth-taxes-after"></td></tr><tr><th scope="row">Disponible</th><td id="growth-net-before"></td><td id="growth-net-after"></td></tr></tbody></table></div>
-  <div class="growth-insight"><h3>¿Se nota más cuando facturas menos?</h3><p id="growth-explanation"></p></div>
-  <p class="growth-footnote">Simula un aumento puntual con tus ajustes actuales, sin nuevos gastos. Si se repite, revisa tu media prevista y tu cuota. La renta anual es progresiva: esta gráfica muestra tu reserva mensual, no el impuesto definitivo.</p>
+  <p id="growth-scope" class="growth-footnote">Simula un cambio sostenido: tu media prevista varía en la misma cantidad y la cuota se ajusta al tramo. Mantiene tus gastos y porcentaje de reserva. No calcula la renta anual.</p>
 </dialog>
 <dialog id="average-modal"><form id="average-form"><div class="modal-head" style="justify-content:flex-end"><button type="button" data-close aria-label="Cerrar">×</button></div><h2>No todos los meses son iguales.</h2><p class="muted">La Seguridad Social determina tu tramo según el promedio mensual de tus rendimientos netos anuales previstos. Aquí usamos el punto medio entre un mes tranquilo y uno bueno para aproximar tu facturación media y estimar tu tramo.</p><label>Un mes tranquilo (€)<input id="minimum" type="number" min="0" max="10000000" step="0.01" required value="2000"></label><label>Un mes bueno (€)<input id="maximum" type="number" min="0" max="10000000" step="0.01" required value="4000"></label><p id="average-error" class="error" role="alert"></p><button class="primary" type="submit">Usar este promedio ↗</button></form></dialog>
 <dialog id="expense-modal"><form id="expense-form"><div class="modal-head"><span class="step">＋</span><button type="button" data-close aria-label="Cerrar">×</button></div><h2>Cada gasto cuenta.</h2><p class="muted">Añade un gasto mensual deducible, sin IVA recuperable. Para gastos anuales, divide el importe entre 12.</p><label>Nombre del gasto<input id="expense-name" maxlength="80" placeholder="Ej. Gestoría, software, coworking…" required></label><label>Importe mensual (€)<input id="expense-value" type="number" min="0.01" max="10000000" step="0.01" placeholder="0,00" required></label><button class="primary" type="submit">Añadir gasto ↗</button></form></dialog><div id="toast" role="status"></div><script src="app.js" type="module"></script></body></html>
