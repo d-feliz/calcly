@@ -51,3 +51,7 @@
 @media(max-width:720px){.actions{width:100%;gap:10px;align-items:center}.progress-actions{flex:1}.progress-actions .tooltip-wrap{flex:1}.progress-actions button{width:100%;font-size:12px;padding:10px 8px}.report-button{margin-bottom:0;font-size:12px;padding:11px}.field-heading{gap:8px}.field-purpose{font-size:9px}.field-heading>label{font-size:14px}.reference-panel>summary{padding:22px}.reference-content{padding:0 16px 20px}.contributions-total>strong{font-size:30px}footer>span:last-child{width:auto}.actions .tooltip-wrap>[role=tooltip]{left:0;right:auto;width:190px}}
 @media(max-width:390px){.actions{flex-wrap:wrap}.progress-actions{flex-basis:100%}.report-button{width:100%}.field-heading{align-items:flex-start}.field-purpose{max-width:87px;line-height:1.5}}
 @media(prefers-reduced-motion:reduce){.disclosure-icon{transition:none}}
+footer{flex-wrap:wrap}
+.author-note{flex-basis:100%;font-size:12px;line-height:1.75;color:var(--muted);margin-bottom:12px}
+.author-note p{margin:0 0 8px;max-width:780px}
+.author-note a{text-underline-offset:3px}
