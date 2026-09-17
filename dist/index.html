@@ -20,20 +20,20 @@
       <div class="income-field">
         <div class="field-heading"><label for="average-income">Facturación media prevista</label></div>
         <p id="average-help" class="field-help">Tu media mensual sin IVA, de la que sale la previsión de ingresos que comunicas a la Seguridad Social para calcular tu cuota.</p>
-        <div class="money-input"><input id="average-income" aria-describedby="average-help" type="number" min="0" max="10000000" step="0.01" value="3000"><span>€ <small>/ mes</small></span></div>
+        <div class="money-input"><input id="average-income" aria-describedby="average-help" type="number" min="0" max="10000000" step="any" value="3000"><span>€ <small>/ mes</small></span></div>
         <button id="average" class="text-button">⌁ Ayúdame a estimar la media <span>↗</span></button>
       </div>
       <div class="income-field current-month">
         <div class="field-heading"><label for="income">Facturación de este mes</label></div>
         <p id="income-help" class="field-help">Lo que facturas este mes, sin IVA y antes de retenciones.</p>
-        <div class="money-input"><input id="income" aria-describedby="income-help" type="number" min="0" max="10000000" step="0.01" value="3000"><span>€ <small>/ mes</small></span></div>
+        <div class="money-input"><input id="income" aria-describedby="income-help" type="number" min="0" max="10000000" step="any" value="3000"><span>€ <small>/ mes</small></span></div>
       </div>
     </article>
     <article class="panel">
       <div class="panel-title"><span class="step">02</span><h3>Tu cuota de autónomo</h3></div>
       <div class="bracket-banner"><span>Estás en el <strong id="bracket-name"></strong></span><a id="view-bracket" href="#bracket-reference" aria-controls="bracket-reference">Ver mi tramo ↗</a></div>
       <div class="slider-heading"><label for="base">Base de cotización</label><strong id="base-value"></strong></div>
-      <input id="base" class="range" type="range" step="0.01">
+      <input id="base" class="range" type="range" step="1">
       <div class="range-labels"><span>Mínimo <b id="base-min"></b></span><span>Máximo <b id="base-max"></b></span></div>
       <p class="muted small">Empezamos por la base mínima. Una base mayor aumenta tu cuota y puede mejorar tus futuras prestaciones.</p>
       <div class="math-line"><span>Base elegida <b id="factor-base"></b></span><span>×</span><span>Tipo 2026 <b>31,50 %</b></span><span>=</span><span>Cuota mensual <b class="purple-text" id="fee"></b></span></div>
@@ -42,7 +42,7 @@
       <div class="panel-title"><span class="step">03</span><h3>Gastos e IRPF</h3></div>
       <div class="expense-fixed"><span>Cuota de autónomo <small>Se incluye automáticamente</small></span><strong id="expense-fee"></strong></div>
       <div id="expenses"></div><button class="add-button" id="add-expense">＋ Añadir gastos</button>
-      <div class="irpf-rate"><label for="tax">Reserva para IRPF <small>Orientación de pago a cuenta - Suele ser un 20% del beneficio.</small></label><div><input id="tax" aria-label="Porcentaje de reserva IRPF" type="number" min="0" max="60" step="0.5" value="20"> %</div></div>
+      <div class="irpf-rate"><label for="tax">Reserva para IRPF <small>Orientación de pago a cuenta - Suele ser un 20% del beneficio.</small></label><div><input id="tax" aria-label="Porcentaje de reserva IRPF" type="number" min="0" max="60" step="any" value="20"> %</div></div>
       <a class="tax-source" href="https://sede.agenciatributaria.gob.es/Sede/impuestos-tasas/impuesto-sobre-renta-personas-fisicas/modelo-130-irpf______esionales-estimacion-directa-fraccionado_/instrucciones.html" target="_blank" rel="noreferrer">AEAT · Modelo 130, casilla 04: 20% del rendimiento neto positivo ↗</a>
       <div class="breakdown"><div><span>Facturación de este mes</span><b id="tax-income"></b></div><div><span>− Gastos deducibles (con cuota)</span><b id="deductions"></b></div><div><span>= Beneficio antes de IRPF</span><b id="profit"></b></div><div class="total-line"><span>Reserva mensual de IRPF <small id="tax-factor"></small></span><strong id="tax-total"></strong></div></div>
       <p class="small muted">Es una reserva mensual orientativa. El modelo 130 se calcula con datos acumulados del año y descuenta retenciones y pagos previos. No es tu tipo efectivo ni tu declaración anual.</p>
@@ -83,21 +83,22 @@
   <div class="growth-modal-heading"><h2 id="growth-title">¿Y si facturase más?</h2><button type="button" data-close aria-label="Cerrar simulador de aumentos" autofocus>×</button></div>
   <p class="growth-subtitle">¿Qué tanto dinero disponible tendría si logro aumentar mi facturación?</p>
   <div class="growth-controls">
-    <div class="growth-input-group"><label for="growth-amount">Facturación mensual</label><div class="growth-amount-wrap"><input id="growth-amount" type="number" min="0" max="10000000" step="0.01"><span aria-hidden="true">€</span></div></div>
+    <div class="growth-input-group"><label for="growth-amount">Facturación mensual</label><div class="growth-amount-wrap"><input id="growth-amount" type="number" min="0" max="10000000" step="any"><span aria-hidden="true">€</span></div></div>
     <button id="growth-reset" type="button" class="outline">Volver a mi facturación actual</button>
   </div>
-  <input id="growth-slider" class="range" type="range" min="0" step="0.01" aria-label="Facturación mensual simulada">
+  <input id="growth-slider" class="range" type="range" min="0" step="1" aria-label="Facturación mensual simulada">
   <div class="growth-slider-labels"><span>0 €</span><span id="growth-limit"></span></div>
   <div class="growth-results" aria-live="polite" aria-atomic="true">
     <div class="growth-result-net"><span>Dinero disponible</span><strong id="growth-net"></strong><p id="growth-difference"></p></div>
     <div class="growth-result-tax"><span>Cuota + reserva de IRPF</span><strong id="growth-tax"></strong><p id="growth-tax-note"></p></div>
   </div>
   <figure class="growth-figure">
-    <div class="growth-legend"><span><i class="growth-key-gross" aria-hidden="true"></i>Facturación</span><span><i class="growth-key-net" aria-hidden="true"></i>Disponible</span><span><i class="growth-key-tax" aria-hidden="true"></i>Cuota + IRPF</span><span><i class="growth-key-bracket" aria-hidden="true"></i>Cambio de tramo</span></div>
+    <div class="growth-legend"><span><i class="growth-key-gross" aria-hidden="true"></i>Facturación</span><span><i class="growth-key-net" aria-hidden="true"></i>Disponible</span><span><i class="growth-key-tax" aria-hidden="true"></i>Cuota + IRPF</span></div>
+    <p id="growth-bracket-label" class="growth-bracket-caption" aria-live="polite"></p>
     <div id="growth-chart" class="growth-chart"></div>
     <p class="growth-x-label">Facturación mensual (€)</p>
   </figure>
   <p id="growth-scope" class="growth-footnote">Simula un cambio sostenido: tu media prevista varía en la misma cantidad y la cuota se ajusta al tramo. Mantiene tus gastos y porcentaje de reserva. No calcula la renta anual.</p>
 </dialog>
-<dialog id="average-modal"><form id="average-form"><div class="modal-head" style="justify-content:flex-end"><button type="button" data-close aria-label="Cerrar">×</button></div><h2>No todos los meses son iguales.</h2><p class="muted">La Seguridad Social determina tu tramo según el promedio mensual de tus rendimientos netos anuales previstos. Aquí usamos el punto medio entre un mes tranquilo y uno bueno para aproximar tu facturación media y estimar tu tramo.</p><label>Un mes tranquilo (€)<input id="minimum" type="number" min="0" max="10000000" step="0.01" required value="2000"></label><label>Un mes bueno (€)<input id="maximum" type="number" min="0" max="10000000" step="0.01" required value="4000"></label><p id="average-error" class="error" role="alert"></p><button class="primary" type="submit">Usar este promedio ↗</button></form></dialog>
-<dialog id="expense-modal"><form id="expense-form"><div class="modal-head"><span class="step">＋</span><button type="button" data-close aria-label="Cerrar">×</button></div><h2>Cada gasto cuenta.</h2><p class="muted">Añade un gasto mensual deducible, sin IVA recuperable. Para gastos anuales, divide el importe entre 12.</p><label>Nombre del gasto<input id="expense-name" maxlength="80" placeholder="Ej. Gestoría, software, coworking…" required></label><label>Importe mensual (€)<input id="expense-value" type="number" min="0.01" max="10000000" step="0.01" placeholder="0,00" required></label><button class="primary" type="submit">Añadir gasto ↗</button></form></dialog><div id="toast" role="status"></div><script src="app.js" type="module"></script></body></html>
+<dialog id="average-modal"><form id="average-form"><div class="modal-head" style="justify-content:flex-end"><button type="button" data-close aria-label="Cerrar">×</button></div><h2>No todos los meses son iguales.</h2><p class="muted">La Seguridad Social determina tu tramo según el promedio mensual de tus rendimientos netos anuales previstos. Aquí usamos el punto medio entre un mes tranquilo y uno bueno para aproximar tu facturación media y estimar tu tramo.</p><label>Un mes tranquilo (€)<input id="minimum" type="number" min="0" max="10000000" step="any" required value="2000"></label><label>Un mes bueno (€)<input id="maximum" type="number" min="0" max="10000000" step="any" required value="4000"></label><p id="average-error" class="error" role="alert"></p><button class="primary" type="submit">Usar este promedio ↗</button></form></dialog>
+<dialog id="expense-modal"><form id="expense-form"><div class="modal-head"><span class="step">＋</span><button type="button" data-close aria-label="Cerrar">×</button></div><h2>Cada gasto cuenta.</h2><p class="muted">Añade un gasto mensual deducible, sin IVA recuperable. Para gastos anuales, divide el importe entre 12.</p><label>Nombre del gasto<input id="expense-name" maxlength="80" placeholder="Ej. Gestoría, software, coworking…" required></label><label>Importe mensual (€)<input id="expense-value" type="number" min="0.01" max="10000000" step="any" placeholder="0,00" required></label><button class="primary" type="submit">Añadir gasto ↗</button></form></dialog><div id="toast" role="status"></div><script src="app.js" type="module"></script></body></html>

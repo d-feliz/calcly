@@ -72,12 +72,12 @@ export function setupGrowth(getState) {
     svg.append(svgElement('line', { x1: margin.left, x2: width - margin.right, y1: y(0), y2: y(0), class: 'growth-grid-line' }));
     const path = read => points.map((point, index) => `${index ? 'L' : 'M'}${x(point.income)},${y(read(point))}`).join(' ');
     svg.append(svgElement('path', { d: `${path(p => p.after.net)} L${x(maxIncome)},${y(0)} L${x(0)},${y(0)} Z`, class: 'growth-net-area' }));
-    for (let i = 1; i < points.length; i++) {
-      if (points[i].after.index === points[i - 1].after.index) continue;
-      const boundary = points[i];
-      const line = svgElement('line', { x1: x(boundary.income), x2: x(boundary.income), y1: margin.top, y2: height - margin.bottom, class: 'growth-bracket-line' });
-      line.append(svgElement('title', {}, `Tramo ${boundary.after.bracket[4]}: ${money(boundary.income)} de facturación mensual`));
-      svg.append(line);
+    const bands = points.filter((point, i) => !i || point.after.index !== points[i - 1].after.index);
+    const selectedBand = bands.findIndex(point => point.after.index === comparison.after.index);
+    if (selectedBand >= 0) {
+      const left = x(bands[selectedBand].income);
+      const right = x(bands[selectedBand + 1]?.income ?? maxIncome);
+      svg.append(svgElement('rect', { x: left, y: margin.top, width: right - left, height: height - margin.top - margin.bottom, class: 'growth-bracket-band', fill: '#91b989' }));
     }
     svg.append(svgElement('path', { d: path(p => p.income), class: 'growth-gross-line' }));
     svg.append(svgElement('path', { d: path(p => p.after.net), class: 'growth-net-line' }));
@@ -106,6 +106,7 @@ export function setupGrowth(getState) {
     set('growth-difference', c.extra === 0 ? 'Tu disponible actual.' : `${signedMoney(c.netIncrease)} respecto a tu disponible actual.`);
     set('growth-tax', money(c.after.contributions));
     set('growth-tax-note', `Cuota ${money(c.after.fee)} · Tramo ${c.after.bracket[4]}`);
+    set('growth-bracket-label', `Tramo ${c.after.bracket[4].toLowerCase()}`);
     drawChart(state, c);
   }
   function reset() {

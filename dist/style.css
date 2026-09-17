@@ -102,8 +102,16 @@ dialog.growth-modal{width:860px;max-height:calc(100dvh - 40px);padding:30px 34px
 #growth-reset:disabled{opacity:.5;cursor:default}
 .growth-baseline{stroke:#8a9685;stroke-width:1.5;stroke-dasharray:6 4}
 .growth-subtitle{font-size:15px;line-height:1.6;color:var(--muted);margin:8px 0 0}
-.growth-bracket-line{stroke:#b4bdaa;stroke-width:.65;vector-effect:non-scaling-stroke}
-.growth-legend .growth-key-bracket{width:0;height:12px;border-top:0;border-left:1px solid #b4bdaa;margin:0 9px}
+.growth-bracket-band{opacity:.12}
+.growth-bracket-caption{font-size:12px;color:#536b47;margin:12px 0 0;display:flex;align-items:center;gap:7px}
+.growth-bracket-caption:before{content:'';width:12px;height:12px;background:#91b98933;border-radius:3px}
+.number-control{position:relative;display:inline-block;min-width:0;width:100%;flex:1}
+.number-control.number-control-tax{width:95px}
+.number-control input[type=number]{width:100%;padding-right:34px!important;appearance:textfield;-moz-appearance:textfield}
+.number-control input::-webkit-inner-spin-button,.number-control input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.number-buttons{position:absolute;right:5px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column}
+.number-buttons button{border:0;background:transparent;font:15px Arial,sans-serif;line-height:20px;width:26px;height:22px;padding:0;border-radius:3px;color:var(--muted)}
+.number-buttons button:hover{background:#e3e8e1;color:var(--ink)}
 .growth-base-label{fill:#66775b;font:12px Arial,sans-serif}
 @media(max-width:600px){#growth-reset{margin-top:12px;max-width:none;width:100%}}
 .growth-grid-line{stroke:#e0e7d9;stroke-width:1}
