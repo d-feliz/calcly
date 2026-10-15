@@ -25,6 +25,8 @@ export function setupNumberInputs() {
       button.textContent = direction > 0 ? '+' : '−';
       button.setAttribute('aria-label', `${direction > 0 ? 'Aumentar' : 'Reducir'} ${input.id === 'tax' ? '1 punto porcentual' : '1 euro'}`);
       button.setAttribute('aria-controls', input.id);
+      // Arrow keys already step the value, so Tab skips these buttons.
+      button.tabIndex = -1;
       button.addEventListener('click', () => change(direction));
       controls.append(button);
     }

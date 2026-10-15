@@ -152,3 +152,15 @@ dialog.growth-modal{width:860px;max-height:calc(100dvh - 40px);padding:30px 34px
 .flat-rate-answers button{flex:1;font-size:15px;padding:14px 20px}
 .flat-rate-view .math-line{margin-top:4px}
 .link-button{display:block;margin-left:auto;border:0;background:none;padding:20px 0 0;font-size:14px;font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.calculate-button{width:100%;justify-content:center;gap:14px;font-size:18px;padding:22px 24px}
+.calculate-button span{color:var(--green);font-size:22px}
+.result-card:focus{outline:none}
+.result-cover{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;padding:36px;background:#243b2d8c;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:opacity .7s ease,backdrop-filter .7s ease,-webkit-backdrop-filter .7s ease}
+.result-cover p{max-width:280px;margin:0;color:#fff;font-size:17px;line-height:1.55;text-align:center}
+.cover-arrow{display:block;margin:0 auto 14px;color:var(--green);font-size:30px}
+.cover-arrow:before{content:'←'}
+.cover-direction-narrow{display:none}
+.result-cover.is-leaving{opacity:0;backdrop-filter:blur(0);-webkit-backdrop-filter:blur(0);pointer-events:none}
+@media(max-width:720px){.cover-arrow:before{content:'↑'}.cover-direction-wide{display:none}.cover-direction-narrow{display:inline}}
+@media(prefers-reduced-motion:reduce){.result-cover{transition:none}}
+.enter-key{min-width:28px;padding:3px 7px;border:1px solid #ffffff4d;border-bottom-width:2px;border-radius:5px;color:var(--green);font-family:inherit;font-size:15px;line-height:1.2;text-align:center}

@@ -143,7 +143,7 @@ $('#file').onchange = async event => {
   const file = event.target.files[0]; if (!file) return;
   try {
     if (file.size > 1000000) throw Error('El archivo supera el límite de 1 MB.');
-    const imported = validate(JSON.parse(await file.text())); state = imported; sync(); toast('Progreso recuperado correctamente.');
+    const imported = validate(JSON.parse(await file.text())); state = imported; sync(); showTotal({ animated: false }); toast('Progreso recuperado correctamente.');
   } catch (error) { toast(error instanceof SyntaxError ? 'El archivo no contiene JSON válido.' : error.message); }
   finally { event.target.value = ''; }
 };
@@ -154,6 +154,38 @@ $('#pdf').onclick = async () => {
     download(await generateReport(snapshot), 'calcly-reporte-2026.pdf'); toast('Reporte PDF generado en tu equipo.');
   } catch { toast('No se pudo generar el reporte. Inténtalo de nuevo.'); }
   finally { button.disabled = false; button.innerHTML = label; }
+};
+// The cover stays only until the first «Calcular»; returning visitors see their total directly.
+const resultCover = $('#result-cover'), resultCard = $('.result-card');
+const resultContent = [...resultCard.children].filter(child => child !== resultCover);
+function readHasCalculated() { try { return localStorage.getItem('calcly-calculated') === 'true'; } catch { return false; } }
+function showTotal({ animated }) {
+  resultContent.forEach(child => child.inert = false);
+  try { localStorage.setItem('calcly-calculated', 'true'); } catch {}
+  if (resultCover.hidden) return;
+  if (!animated) { resultCover.hidden = true; return; }
+  resultCover.addEventListener('transitionend', () => resultCover.hidden = true, { once: true });
+  resultCover.classList.add('is-leaving');
+  resultCard.focus({ preventScroll: true });
+}
+function waitForScrollEnd() {
+  return new Promise(resolve => {
+    let lastScrollY = scrollY, stableFrames = 0;
+    const startedAt = performance.now();
+    (function checkScroll() {
+      stableFrames = scrollY === lastScrollY ? stableFrames + 1 : 0; lastScrollY = scrollY;
+      if (stableFrames >= 6 || performance.now() - startedAt > 2000) resolve();
+      else requestAnimationFrame(checkScroll);
+    })();
+  });
+}
+if (readHasCalculated()) showTotal({ animated: false });
+else resultContent.forEach(child => child.inert = true);
+$('#calculate').onclick = async () => {
+  const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  $('#calculator .section-heading').scrollIntoView({ behavior: prefersReducedMotion ? 'instant' : 'smooth', block: 'start' });
+  await waitForScrollEnd();
+  showTotal({ animated: !prefersReducedMotion });
 };
 sync();
 setupGrowth(() => state);

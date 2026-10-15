@@ -10,6 +10,10 @@ Abre http://localhost:5173. `dist/model.js` contiene las tablas y cálculos; `di
 
 La media prevista determina el tramo. La facturación real del mes determina la reserva y el disponible, sin modificar la base elegida. Los gastos indicados también se consideran representativos de los gastos medios previstos para estimar el tramo. El disponible descuenta cuota, otros gastos y reserva de IRPF.
 
+La primera vez, el resultado queda tapado por una capa borrosa hasta pulsar «Calcular», al final del formulario: la página sube al título de la calculadora y, al terminar el desplazamiento, la capa desaparece con una animación. El navegador recuerda que ya calculaste y no vuelve a taparlo.
+
+Los botones + y − de los campos numéricos no reciben Tab: las flechas ↑ y ↓ hacen lo mismo con el teclado.
+
 La primera vez, la sección de cuota pregunta si tienes tarifa plana. Con tarifa plana, la cuota es fija (88,64 € en 2026: 80 € + 8,64 € de MEI) y no depende del tramo ni de la base; sin ella, eliges la base de cotización. Puedes cambiar la respuesta en cualquier momento.
 
 Los archivos JSON usan la versión 3 (dos importes de facturación y la respuesta sobre la tarifa plana) y cargan también las versiones 1 y 2: el único ingreso de la versión 1 inicializa ambos campos, y la pregunta de la tarifa plana queda sin responder. Los reportes se dibujan localmente a alta resolución y se descargan sin llamadas de red.
