@@ -170,11 +170,14 @@ function showTotal({ animated }) {
 }
 function waitForScrollEnd() {
   return new Promise(resolve => {
-    let lastScrollY = scrollY, stableFrames = 0;
+    let lastScrollY = scrollY, stableFrames = 0, hasScrolled = false;
     const startedAt = performance.now();
     (function checkScroll() {
-      stableFrames = scrollY === lastScrollY ? stableFrames + 1 : 0; lastScrollY = scrollY;
-      if (stableFrames >= 6 || performance.now() - startedAt > 2000) resolve();
+      const isScrolling = scrollY !== lastScrollY;
+      hasScrolled ||= isScrolling; stableFrames = isScrolling ? 0 : stableFrames + 1; lastScrollY = scrollY;
+      const scrollNeverStarted = !hasScrolled && stableFrames >= 10;
+      const scrollSettled = hasScrolled && stableFrames >= 6;
+      if (scrollNeverStarted || scrollSettled || performance.now() - startedAt > 2000) resolve();
       else requestAnimationFrame(checkScroll);
     })();
   });
@@ -183,7 +186,10 @@ if (readHasCalculated()) showTotal({ animated: false });
 else resultContent.forEach(child => child.inert = true);
 $('#calculate').onclick = async () => {
   const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  $('#calculator .section-heading').scrollIntoView({ behavior: prefersReducedMotion ? 'instant' : 'smooth', block: 'start' });
+  // On one-column layouts the total sits under the form, so the heading would scroll it out of view.
+  const isTotalBelowForm = resultCard.getBoundingClientRect().top > $('#calculate').getBoundingClientRect().top;
+  const scrollTarget = isTotalBelowForm ? resultCard : $('#calculator .section-heading');
+  scrollTarget.scrollIntoView({ behavior: prefersReducedMotion ? 'instant' : 'smooth', block: 'start' });
   await waitForScrollEnd();
   showTotal({ animated: !prefersReducedMotion });
 };
