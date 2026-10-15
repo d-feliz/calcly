@@ -1,4 +1,4 @@
-import { calculate, brackets, validate, round } from './model.js';
+import { calculate, brackets, validate, round, FLAT_RATE_FEE, FLAT_RATE_REDUCED_FEE, FLAT_RATE_MEI } from './model.js';
 import { generateReport } from './report.js';
 import { setupGrowth } from './growth.js';
 import { setupNumberInputs } from './number-inputs.js';
@@ -9,7 +9,7 @@ const $ = selector => document.querySelector(selector);
 const money = value => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(value);
 const num = value => new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
 const percent = value => new Intl.NumberFormat('es-ES', { maximumFractionDigits: 1 }).format(value) + '%';
-let state = { version: 2, year: 2026, averageIncome: 3000, income: 3000, base: null, tax: 20, expenses: [] };
+let state = { version: 3, year: 2026, averageIncome: 3000, income: 3000, hasFlatRate: null, base: null, tax: 20, expenses: [] };
 let current, toastTimer;
 
 function toast(message) {
@@ -35,6 +35,12 @@ function render() {
     'summary-tax': money(c.tax), 'summary-expenses': money(c.expenses), 'contributions-total': money(c.contributions),
   };
   Object.entries(values).forEach(([id, value]) => text(id, value));
+  document.querySelectorAll('.flat-rate-fee').forEach(element => element.textContent = money(FLAT_RATE_FEE));
+  text('flat-rate-reduced-fee', money(FLAT_RATE_REDUCED_FEE)); text('flat-rate-mei', money(FLAT_RATE_MEI));
+  text('expense-fee-note', state.hasFlatRate === true ? 'Tarifa plana · se incluye automáticamente' : 'Se incluye automáticamente');
+  $('#flat-rate-question').hidden = state.hasFlatRate !== null;
+  $('#flat-rate-view').hidden = state.hasFlatRate !== true;
+  $('#full-rate-view').hidden = state.hasFlatRate !== false;
   $('#net').replaceChildren(document.createTextNode(num(c.net) + ' '));
   const currency = document.createElement('span'); currency.className = 'currency'; currency.textContent = '€'; $('#net').append(currency);
   text('result-sentence', `Facturas ${money(state.income)}, pero solo puedes usar ${money(c.net)} este mes.${c.net < 0 ? ' Tus gastos y cuota superan tus ingresos.' : ''}`);
@@ -85,6 +91,15 @@ for (const [id, key] of [['average-income', 'averageIncome'], ['income', 'income
   input.addEventListener('blur', () => input.value = state[key]);
 }
 $('#base').addEventListener('input', event => { state.base = Number(event.target.value); render(); });
+// Touch screens have no hover, so a tap must also open the hint; a tap elsewhere or Escape closes it.
+const flatRateHint = $('.flat-rate-hint').closest('.tooltip-wrap');
+$('.flat-rate-hint').onclick = () => flatRateHint.classList.toggle('is-open');
+document.addEventListener('click', event => { if (!flatRateHint.contains(event.target)) flatRateHint.classList.remove('is-open'); });
+document.addEventListener('keydown', event => { if (event.key === 'Escape') flatRateHint.classList.remove('is-open'); });
+document.querySelectorAll('[data-has-flat-rate]').forEach(button => button.onclick = () => {
+  state.hasFlatRate = button.dataset.hasFlatRate === 'true'; render();
+  $(state.hasFlatRate ? '#flat-rate-view' : '#full-rate-view').focus();
+});
 $('#average').onclick = () => $('#average-modal').showModal();
 $('#add-expense').onclick = () => {
   if (state.expenses.length >= 200) { toast('Puedes incluir hasta 200 gastos.'); return; }

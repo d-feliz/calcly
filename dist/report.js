@@ -1,4 +1,4 @@
-import { calculate, round } from './model.js';
+import { calculate, round, FLAT_RATE_REDUCED_FEE, FLAT_RATE_MEI } from './model.js';
 
 const PAGE = { width: 595, height: 842, scale: 3 };
 const colors = { ink: '#21372b', muted: '#69776b', green: '#c8f477', purple: '#a798d5',
@@ -71,10 +71,17 @@ export function* renderReportPages(state, { createCanvas = () => document.create
 
   box(32, 378, 258, 160); box(305, 378, 258, 160);
   text('02  CUOTA DE AUTÓNOMO', 48, 401, 10, colors.muted, '600');
-  pair('Tramo', c.bracket[4], 48, 424, 226);
-  pair('Rendimiento previsto', money(c.returns), 48, 444, 226);
-  pair('Base elegida', money(c.base), 48, 464, 226);
-  text(`${money(c.base)} × 31,50%`, 48, 486, 10, colors.muted);
+  if (state.hasFlatRate === true) {
+    pair('Modalidad', 'Tarifa plana', 48, 424, 226);
+    pair('Rendimiento previsto', money(c.returns), 48, 444, 226);
+    pair('Tramo sin tarifa plana', c.bracket[4], 48, 464, 226);
+    text(`${money(FLAT_RATE_REDUCED_FEE)} + ${money(FLAT_RATE_MEI)} de MEI`, 48, 486, 10, colors.muted);
+  } else {
+    pair('Tramo', c.bracket[4], 48, 424, 226);
+    pair('Rendimiento previsto', money(c.returns), 48, 444, 226);
+    pair('Base elegida', money(c.base), 48, 464, 226);
+    text(`${money(c.base)} × 31,50%`, 48, 486, 10, colors.muted);
+  }
   text(money(c.fee), 274, 519, 23, '#8171aa', '600', 'right', 220);
   text('03  RESERVA DE IRPF', 321, 401, 10, colors.muted, '600');
   pair('Facturación de este mes', money(state.income), 321, 424, 226);

@@ -134,3 +134,21 @@ dialog.growth-modal{width:860px;max-height:calc(100dvh - 40px);padding:30px 34px
 .growth-insight p{font-size:14px;line-height:1.7;margin:7px 0 0;color:#5e7251}
 .growth-footnote{font-size:12px;line-height:1.7;color:#7c8675;margin:20px 0 0}
 @media(max-width:600px){dialog.growth-modal{padding:22px 18px;max-width:calc(100% - 20px);max-height:calc(100dvh - 20px)}.growth-modal-heading h2{font-size:24px}.growth-controls{display:block}.growth-input-group{max-width:none}.growth-presets{margin-top:12px;gap:8px}.growth-presets button{flex:1;padding:10px 6px}.growth-results{gap:10px;grid-template-columns:1fr 1fr}.growth-result-net,.growth-result-tax{padding:16px 12px}.growth-results strong{font-size:27px;letter-spacing:-1px}.growth-results span{font-size:13px}.growth-results p{font-size:12px}.growth-legend{gap:10px 13px}.growth-figure figcaption{display:block}.growth-figure figcaption>span{display:block;margin-top:3px}.growth-comparison th,.growth-comparison td{font-size:12px;padding:10px 4px}.growth-assumptions{margin-bottom:20px}}
+[hidden]{display:none!important}
+.flat-rate-question,.flat-rate-view{margin-top:20px}
+.flat-rate-question:focus,.flat-rate-view:focus{outline:none}
+.flat-rate-heading{position:relative;display:flex;align-items:center;gap:9px;font-size:21px;letter-spacing:-.8px;font-weight:600;margin:0 0 4px}
+.flat-rate-hint{width:20px;height:20px;padding:0;border:1px solid #c9d3c2;border-radius:50%;background:none;color:var(--muted);font-size:12px;font-weight:600;letter-spacing:0;line-height:1}
+.flat-rate-hint:hover{background:#edf3e6;color:var(--ink)}
+/* Anchor the tooltip to the question, not the small icon, so it stays inside narrow screens. */
+.flat-rate-heading .tooltip-wrap{position:static}
+/* Tapping focuses the button on some phones, so plain focus or sticky hover must not keep the hint open. */
+.flat-rate-heading .tooltip-wrap:hover>[role=tooltip],.flat-rate-heading .tooltip-wrap:focus-within>[role=tooltip]{display:none}
+@media(hover:hover){.flat-rate-heading .tooltip-wrap:hover>[role=tooltip]{display:block}}
+.flat-rate-heading .tooltip-wrap:has(.flat-rate-hint:focus-visible)>[role=tooltip],.flat-rate-heading .tooltip-wrap.is-open>[role=tooltip]{display:block}
+.flat-rate-heading [role=tooltip]{left:0;right:auto;width:min(300px,100%);font-weight:400;letter-spacing:0;text-align:left}
+.flat-rate-heading [role=tooltip] strong{color:var(--green);font-weight:600}
+.flat-rate-answers{display:flex;gap:10px;margin:18px 0 4px}
+.flat-rate-answers button{flex:1;font-size:15px;padding:14px 20px}
+.flat-rate-view .math-line{margin-top:4px}
+.link-button{display:block;margin-left:auto;border:0;background:none;padding:20px 0 0;font-size:14px;font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}

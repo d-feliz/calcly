@@ -1,9 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calculateGrowth, growthPoints, MAX_INCOME } from '../dist/growth.js';
-import { calculate, round } from '../dist/model.js';
+import { calculate, round, FLAT_RATE_FEE } from '../dist/model.js';
 
-const state = { version: 2, year: 2026, averageIncome: 3000, income: 3000, base: null, tax: 20, expenses: [] };
+const state = { version: 3, year: 2026, averageIncome: 3000, income: 3000, hasFlatRate: null, base: null, tax: 20, expenses: [] };
 
 test('starts at the exact app result even with distinct average and monthly income', () => {
   const custom = { ...state, averageIncome: 2000, income: 4500, base: 1500 };
@@ -65,4 +65,10 @@ test('all forecasts reconcile and invalid values are rejected', () => {
   for (const income of [-1, Infinity, NaN, MAX_INCOME + .01, '500']) {
     assert.throws(() => calculateGrowth(state, income), RangeError);
   }
+});
+test('with flat rate, crossing brackets keeps the fee fixed', () => {
+  const result = calculateGrowth({ ...state, hasFlatRate: true }, 6000);
+  assert.notEqual(result.after.index, result.before.index);
+  assert.equal(result.before.fee, FLAT_RATE_FEE);
+  assert.equal(result.after.fee, FLAT_RATE_FEE);
 });

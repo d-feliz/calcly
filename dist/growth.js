@@ -105,7 +105,8 @@ export function setupGrowth(getState) {
     set('growth-net', money(c.after.net));
     set('growth-difference', c.extra === 0 ? 'Tu disponible actual.' : `${signedMoney(c.netIncrease)} respecto a tu disponible actual.`);
     set('growth-tax', money(c.after.contributions));
-    set('growth-tax-note', `Cuota ${money(c.after.fee)} · Tramo ${c.after.bracket[4]}`);
+    set('growth-tax-note', `Cuota ${money(c.after.fee)} · ${state.hasFlatRate === true ? 'Tarifa plana' : 'Tramo ' + c.after.bracket[4]}`);
+    set('growth-fee-scope', state.hasFlatRate === true ? 'la cuota se mantiene fija por la tarifa plana' : 'la cuota se ajusta al tramo');
     set('growth-bracket-label', `Tramo ${c.after.bracket[4].toLowerCase()}`);
     drawChart(state, c);
   }

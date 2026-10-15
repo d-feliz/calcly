@@ -10,10 +10,11 @@ const require = createRequire(import.meta.url);
 const { createCanvas } = require(process.argv[2]);
 const output = process.argv[3];
 await mkdir(output, { recursive: true });
-const sample = { version: 2, year: 2026, averageIncome: 3000, income: 4200, base: null, tax: 20,
+const sample = { version: 3, year: 2026, averageIncome: 3000, income: 4200, hasFlatRate: false, base: null, tax: 20,
   expenses: [{ name: 'Gestoría', amount: 75 }, { name: 'Software y herramientas', amount: 49.90 }, { name: 'Coworking', amount: 180 }] };
 for (const [name, state] of [
   ['sample', sample],
+  ['flat-rate', { ...sample, hasFlatRate: true }],
   ['long', { ...sample, expenses: Array.from({ length: 40 }, (_, i) => ({ name: `${i + 1}. Suscripción mensual a herramientas de diseño, gestión de proyectos y contabilidad`, amount: 5.55 })) }],
   ['zero', { ...sample, income: 0, expenses: [] }],
   ['large', { ...sample, averageIncome: 10000000, income: 10000000, base: 5101.2 }],

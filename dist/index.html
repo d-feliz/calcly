@@ -31,16 +31,29 @@
     </article>
     <article class="panel">
       <div class="panel-title"><span class="step">02</span><h3>Tu cuota de autónomo</h3></div>
-      <div class="bracket-banner"><span>Estás en el <strong id="bracket-name"></strong></span><a id="view-bracket" href="#bracket-reference" aria-controls="bracket-reference">Ver mi tramo ↗</a></div>
-      <div class="slider-heading"><label for="base">Base de cotización</label><strong id="base-value"></strong></div>
-      <input id="base" class="range" type="range" step="1">
-      <div class="range-labels"><span>Mínimo <b id="base-min"></b></span><span>Máximo <b id="base-max"></b></span></div>
-      <p class="muted small">Empezamos por la base mínima. Una base mayor aumenta tu cuota y puede mejorar tus futuras prestaciones.</p>
-      <div class="math-line"><span>Base elegida <b id="factor-base"></b></span><span>×</span><span>Tipo 2026 <b>31,50 %</b></span><span>=</span><span>Cuota mensual <b class="purple-text" id="fee"></b></span></div>
+      <div id="flat-rate-question" class="flat-rate-question" tabindex="-1">
+        <div class="flat-rate-heading"><span id="flat-rate-heading">¿Tienes tarifa plana?</span><span class="tooltip-wrap"><button type="button" class="flat-rate-hint" aria-label="¿Qué es la tarifa plana?" aria-describedby="flat-rate-tooltip">?</button><span role="tooltip" id="flat-rate-tooltip">La tarifa plana es un pago fijo mensual que se hace durante el primer año en lugar de la cuota completa. Si tus ingresos netos son bajos, puede durar un segundo año. En 2026 se pagan <strong class="flat-rate-fee"></strong> al mes (80 € más el MEI). Si pagas unos 88 € al mes, probablemente sí la tengas.</span></span></div>
+        <div class="flat-rate-answers" role="group" aria-labelledby="flat-rate-heading"><button type="button" class="outline" data-has-flat-rate="true">Sí</button><button type="button" class="outline" data-has-flat-rate="false">No</button></div>
+        <p class="muted small">Hasta que respondas, calculamos la cuota sin tarifa plana.</p>
+      </div>
+      <div id="flat-rate-view" class="flat-rate-view" tabindex="-1" hidden>
+        <p class="muted small">Con tarifa plana pagas una cuota fija. Tu tramo y tu base de cotización no cambian esta cuota.</p>
+        <div class="math-line"><span>Tarifa plana <b id="flat-rate-reduced-fee"></b></span><span>+</span><span>MEI 0,90 % <b id="flat-rate-mei"></b></span><span>=</span><span>Cuota mensual <b class="purple-text flat-rate-fee"></b></span></div>
+        <button type="button" class="link-button" data-has-flat-rate="false">¿Y si no la tuviera?</button>
+      </div>
+      <div id="full-rate-view" class="flat-rate-view" tabindex="-1" hidden>
+        <div class="bracket-banner"><span>Estás en el <strong id="bracket-name"></strong></span><a id="view-bracket" href="#bracket-reference" aria-controls="bracket-reference">Ver mi tramo ↗</a></div>
+        <div class="slider-heading"><label for="base">Base de cotización</label><strong id="base-value"></strong></div>
+        <input id="base" class="range" type="range" step="1">
+        <div class="range-labels"><span>Mínimo <b id="base-min"></b></span><span>Máximo <b id="base-max"></b></span></div>
+        <p class="muted small">Empezamos por la base mínima. Una base mayor aumenta tu cuota y puede mejorar tus futuras prestaciones.</p>
+        <div class="math-line"><span>Base elegida <b id="factor-base"></b></span><span>×</span><span>Tipo 2026 <b>31,50 %</b></span><span>=</span><span>Cuota mensual <b class="purple-text" id="fee"></b></span></div>
+        <button type="button" class="link-button" data-has-flat-rate="true">De hecho, tengo tarifa plana</button>
+      </div>
     </article>
     <article class="panel">
       <div class="panel-title"><span class="step">03</span><h3>Gastos e IRPF</h3></div>
-      <div class="expense-fixed"><span>Cuota de autónomo <small>Se incluye automáticamente</small></span><strong id="expense-fee"></strong></div>
+      <div class="expense-fixed"><span>Cuota de autónomo <small id="expense-fee-note">Se incluye automáticamente</small></span><strong id="expense-fee"></strong></div>
       <div id="expenses"></div><button class="add-button" id="add-expense">＋ Añadir gastos</button>
       <div class="irpf-rate"><label for="tax">Reserva para IRPF <small>Orientación de pago a cuenta - Suele ser un 20% del beneficio.</small></label><div><input id="tax" aria-label="Porcentaje de reserva IRPF" type="number" min="0" max="60" step="any" value="20"> %</div></div>
       <a class="tax-source" href="https://sede.agenciatributaria.gob.es/Sede/impuestos-tasas/impuesto-sobre-renta-personas-fisicas/modelo-130-irpf______esionales-estimacion-directa-fraccionado_/instrucciones.html" target="_blank" rel="noreferrer">AEAT · Modelo 130, casilla 04: 20% del rendimiento neto positivo ↗</a>
@@ -64,9 +77,10 @@
     </details>
   </aside></div>
   <details id="method" class="method"><summary>La letra pequeña, en palabras claras <span>＋</span></summary><div>
-    <p>Estimación para autónomos individuales en España, con actividad todo el año y sin bonificaciones. Tablas de 2026 revisadas el 15 de septiembre de 2026. No contempla autónomos societarios, tarifa reducida, pluriactividad ni regímenes especiales.</p>
+    <p>Estimación para autónomos individuales en España, con actividad todo el año. Tablas de 2026 revisadas el 15 de septiembre de 2026. Incluye la tarifa plana si indicas que la tienes. No contempla autónomos societarios, otras bonificaciones, pluriactividad ni regímenes especiales.</p>
+    <p><strong>Tarifa plana:</strong> cuota fija de 88,64 € al mes en 2026: 80 € de cuota reducida + 8,64 € del MEI (0,90%), que la reducción no cubre. Dura 12 meses y puede ampliarse 12 meses más si tus rendimientos netos previstos están por debajo del salario mínimo. Con tarifa plana, el tramo y la base no cambian la cuota. <a href="https://www.seg-social.es/wps/portal/wss/internet/Trabajadores/CotizacionRecaudacionTrabajadores/10721/10724/1320/1322/cuota4425?changeLanguage=es" target="_blank" rel="noreferrer">Consultar en la Seguridad Social ↗</a></p>
     <p><strong>Tramo:</strong> (facturación media prevista sin IVA − gastos indicados) × 93%. Se asume que los gastos del mes son representativos de los gastos medios previstos. La cuota la determina la Seguridad Social según los rendimientos previstos, con posterior regularización; no se calcula a partir de la facturación bruta declarada a Hacienda. La cuota no se resta para determinar este rendimiento. El 7% es una deducción genérica, no una salida de dinero.</p>
-    <p><strong>Cuota:</strong> base elegida × 31,50% (28,30% contingencias comunes + 1,30% profesionales + 0,90% cese + 0,10% formación + 0,90% MEI). Cambiar la facturación real del mes no modifica esta base.</p>
+    <p><strong>Cuota sin tarifa plana:</strong> base elegida × 31,50% (28,30% contingencias comunes + 1,30% profesionales + 0,90% cese + 0,10% formación + 0,90% MEI). Cambiar la facturación real del mes no modifica esta base.</p>
     <p><strong>IRPF:</strong> máximo entre cero y (facturación de este mes − gastos − cuota) × porcentaje de reserva. La AEAT indica un 20% con carácter general en la casilla 04 del modelo 130. Este modelo usa datos acumulados del año y ajusta pagos anteriores y retenciones. Aquí solo se estima una reserva mensual; no el modelo completo ni la renta anual. <a href="https://sede.agenciatributaria.gob.es/Sede/impuestos-tasas/impuesto-sobre-renta-personas-fisicas/modelo-130-irpf______esionales-estimacion-directa-fraccionado_/instrucciones.html" target="_blank" rel="noreferrer">Consultar instrucciones de la AEAT ↗</a></p>
     <p><strong>Disponible:</strong> facturación de este mes − cuota − otros gastos − reserva de IRPF. El total «Cuota + reserva de IRPF» suma cotización e impuestos previstos; su porcentaje se calcula sobre la facturación real del mes. Si no hay facturación, ese porcentaje no es calculable.</p>
     <p><strong>Privacidad:</strong> los importes se procesan solo en este navegador y se conservan localmente en este dispositivo. No usamos analítica ni enviamos tus cifras. El progreso y los reportes PDF se generan en tu equipo.</p>
@@ -98,7 +112,7 @@
     <div id="growth-chart" class="growth-chart"></div>
     <p class="growth-x-label">Facturación mensual (€)</p>
   </figure>
-  <p id="growth-scope" class="growth-footnote">Simula un cambio sostenido: tu media prevista varía en la misma cantidad y la cuota se ajusta al tramo. Mantiene tus gastos y porcentaje de reserva. No calcula la renta anual.</p>
+  <p id="growth-scope" class="growth-footnote">Simula un cambio sostenido: tu media prevista varía en la misma cantidad y <span id="growth-fee-scope">la cuota se ajusta al tramo</span>. Mantiene tus gastos y porcentaje de reserva. No calcula la renta anual.</p>
 </dialog>
 <dialog id="average-modal"><form id="average-form"><div class="modal-head" style="justify-content:flex-end"><button type="button" data-close aria-label="Cerrar">×</button></div><h2>No todos los meses son iguales.</h2><p class="muted">La Seguridad Social determina tu tramo según el promedio mensual de tus rendimientos netos anuales previstos. Aquí usamos el punto medio entre un mes tranquilo y uno bueno para aproximar tu facturación media y estimar tu tramo.</p><label>Un mes tranquilo (€)<input id="minimum" type="number" min="0" max="10000000" step="any" required value="2000"></label><label>Un mes bueno (€)<input id="maximum" type="number" min="0" max="10000000" step="any" required value="4000"></label><p id="average-error" class="error" role="alert"></p><button class="primary" type="submit">Usar este promedio ↗</button></form></dialog>
 <dialog id="expense-modal"><form id="expense-form"><div class="modal-head"><span class="step">＋</span><button type="button" data-close aria-label="Cerrar">×</button></div><h2>Cada gasto cuenta.</h2><p class="muted">Añade un gasto mensual deducible, sin IVA recuperable. Para gastos anuales, divide el importe entre 12.</p><label>Nombre del gasto<input id="expense-name" maxlength="80" placeholder="Ej. Gestoría, software, coworking…" required></label><label>Importe mensual (€)<input id="expense-value" type="number" min="0.01" max="10000000" step="any" placeholder="0,00" required></label><button class="primary" type="submit">Añadir gasto ↗</button></form></dialog><div id="toast" role="status"></div><script src="app.js" type="module"></script></body></html>
